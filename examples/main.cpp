@@ -1,12 +1,17 @@
-#include "../src/ArgumentRegistry.hpp"
+#include "../src/CommandRegistry.hpp"
+
+#include "commands/MyCommand.hpp"
 
 int main(int argc, const char *argv[])
 {
 
-  Commander::ArgumentRegistry* arguments;
-  arguments = new Commander::ArgumentRegistry(argc, argv);
+  Commander::CommandRegistry* registry = new Commander::CommandRegistry(argc, argv);
 
-  arguments->Dump();
+  registry->Register(&(Commands::NewMyCommand));
+
+  registry->Dump();
+
+  registry->Execute();
 
   return 0;
 }
