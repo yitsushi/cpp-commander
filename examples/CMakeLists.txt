@@ -1,11 +1,10 @@
-
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/commands COMMANDS)
 
-add_executable(cpp-commander main.cpp ${COMMANDS})
+add_executable(example main.cpp ${COMMANDS})
 
 
-target_link_libraries(cpp-commander commander)
+target_link_libraries(example commander)
 
-install(TARGETS cpp-commander RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
+install(TARGETS example RUNTIME DESTINATION "${CMAKE_BINARY_DIR}/bin")
 
 
