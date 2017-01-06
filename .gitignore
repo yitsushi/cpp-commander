@@ -1,2 +1,9 @@
+bin/
+lib/
 *.o
-examples/bin
+CMakeFiles
+CMakeCache.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
+cmake_install.cmake
+Makefile
