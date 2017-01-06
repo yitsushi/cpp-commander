@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <list>
 #include "MyCommand.hpp"
 #include "../../src/ArgumentRegistry.hpp"
 #include "../../src/CommandDescriptor.hpp"
@@ -11,6 +12,14 @@ namespace Commands {
 
     if (args->FindByKey("verbose") != nullptr) {
       std::cout << "Verbose mode is active..." << std::endl;
+    }
+
+    if (args->FindByKey("ids") != nullptr) {
+      std::list<int> ids = args->FindByKey("ids")->IntListValue(',');
+      std::cout << "Provided ID list:" << std::endl;
+      for (int id : ids) {
+        std::cout << " - " << id << std::endl;
+      }
     }
   }
 
