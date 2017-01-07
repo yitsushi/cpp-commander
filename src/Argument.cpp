@@ -22,6 +22,7 @@
 #include "Argument.hpp"
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 namespace Commander {
   Argument::Argument(const std::string key, const std::string value) : m_key(key), m_value(value)
