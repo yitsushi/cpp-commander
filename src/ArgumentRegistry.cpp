@@ -21,6 +21,7 @@
 #include "ArgumentRegistry.hpp"
 #include "Argument.hpp"
 #include <iostream>
+#include <cstring>
 
 namespace Commander {
   ArgumentRegistry::ArgumentRegistry(int argc, const char *argv[])
@@ -28,10 +29,10 @@ namespace Commander {
     for (int i = 1; i < argc; i++) {
       std::string key, value;
 
-      if (strncmp(argv[i], "-", 1) == 0) {
+      if (std::strncmp(argv[i], "-", 1) == 0) {
         int shift = 1;
 
-        if (strncmp(argv[i], "--", 2) == 0) shift = 2;
+        if (std::strncmp(argv[i], "--", 2) == 0) shift = 2;
         key = std::string(argv[i] + shift);
 
         int separator_index = key.find("=");
