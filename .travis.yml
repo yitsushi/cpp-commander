@@ -16,5 +16,5 @@ addons:
       - libc++-dev
 
 script:
-    - cmake . && make && ctest
+    - cmake . && cmake --build . && ctest
 
