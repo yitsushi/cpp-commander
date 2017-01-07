@@ -1,0 +1,20 @@
+language: cpp
+
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
+      - boost-latest
+      - ubuntu-toolchain-r-test
+    packages:
+      - libboost1.55-all-dev
+      - cmake
+      - cmake-data
+      - gcc-6
+      - g++-6
+      - clang
+      - libc++-dev
+
+script:
+    - cmake . && cmake --build . && ctest
+

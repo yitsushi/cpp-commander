@@ -1,14 +1,24 @@
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.63.0 COMPONENTS unit_test_framework REQUIRED) 
 
-if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
 
-  aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} COMMANDER_TESTS_SOURCES)
+file(GLOB TEST_SRCS *.cpp)
 
-  add_executable(commander-tests ${COMMANDER_TESTS_SOURCES})
-  target_link_libraries(commander-tests commander ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-  add_test(commander-tests commander-tests)
-endif()
+foreach(testSrc ${TEST_SRCS})
+  get_filename_component(testName ${testSrc} NAME_WE)
+  add_executable(${testName} ${testSrc})
+  target_link_libraries(${testName} ${Boost_LIBRARIES} commander)
+  set_target_properties(${testName} PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests)
+  add_test(NAME ${testName}
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests
+    COMMAND ${CMAKE_BINARY_DIR}/bin/tests/${testName})
+endforeach(testSrc)
+
+#aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} COMMANDER_TESTS_SOURCES)
+
+#add_executable(commander-tests ${COMMANDER_TESTS_SOURCES})
+#target_link_libraries(commander-tests commander ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+#add_test(commander-tests commander-tests)

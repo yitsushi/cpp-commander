@@ -94,7 +94,8 @@ BOOST_AUTO_TEST_CASE(ListValueArgument)
     ss << s << delimiter;
   }
   value = ss.str();
-  value.pop_back();
+  // value.pop_back(); <-- only c++11
+  value = value.substr(0, value.length()-1);
 
   arg = new Commander::Argument(key, value);
 
