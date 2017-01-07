@@ -11,6 +11,7 @@ SET(CPACK_GENERATOR "TGZ")
 
 add_subdirectory("src")
 add_subdirectory("examples")
+add_subdirectory("tests")
 
 include_directories("examples")
 
