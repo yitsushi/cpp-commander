@@ -9,6 +9,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set (CMAKE_CXX_STANDARD 14)
 SET(CPACK_GENERATOR "TGZ")
 
+find_package(Boost COMPONENTS unit_test_framework system filesystem)
+enable_testing()
+
 add_subdirectory("src")
 add_subdirectory("examples")
 add_subdirectory("tests")
