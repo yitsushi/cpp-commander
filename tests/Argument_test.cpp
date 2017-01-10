@@ -4,7 +4,7 @@
 #include <string>
 #include <list>
 #include <sstream>
-#include "../src/Argument.hpp"
+#include <Commander/Argument.hpp>
 
 BOOST_AUTO_TEST_CASE(KeyOnlyArgument)
 {

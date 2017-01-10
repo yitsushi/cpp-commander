@@ -1,4 +1,4 @@
-#include "../src/CommandRegistry.hpp"
+#include <Commander/CommandRegistry.hpp>
 
 #include "commands/MyCommand.hpp"
 

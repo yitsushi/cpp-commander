@@ -12,11 +12,11 @@ SET(CPACK_GENERATOR "TGZ")
 find_package(Boost COMPONENTS unit_test_framework system filesystem)
 enable_testing()
 
-add_subdirectory("src")
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+add_subdirectory("Commander")
 add_subdirectory("examples")
 add_subdirectory("tests")
-
-include_directories("examples")
 
 include(CPack)
 

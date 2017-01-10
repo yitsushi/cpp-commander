@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <Commander/ArgumentRegistry.hpp>
+#include <Commander/CommandDescriptor.hpp>
 #include "MyCommand.hpp"
-#include "../../src/ArgumentRegistry.hpp"
-#include "../../src/CommandDescriptor.hpp"
 
 namespace Commands {
   void MyCommand::Execute(Commander::ArgumentRegistry* args)
