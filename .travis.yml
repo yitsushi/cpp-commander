@@ -16,8 +16,5 @@ addons:
       - libc++-dev
 
 script:
-    - cmake -DCMAKE_BUILD_TYPE=Debug -DWITHCOVERAGE=1 .
-    - cmake --build .
-    - make coverage
-    - ctest
+  - ./build-and-run.sh
 

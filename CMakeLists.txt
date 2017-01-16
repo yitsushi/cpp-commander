@@ -22,17 +22,13 @@ find_package(Boost COMPONENTS unit_test_framework system filesystem)
 enable_testing()
 
 if(COVERAGE_ENABLED)
-  find_program( GCOV_PATH gcov )
-  find_program( LCOV_PATH lcov )
-  find_program( GENHTML_PATH genhtml )
-  find_program( GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/tests)
+  find_program(GCOV_PATH gcov)
+  find_program(LCOV_PATH lcov)
+  find_program(GENHTML_PATH genhtml)
 
   if(NOT GCOV_PATH)
     message(FATAL_ERROR "gcov not found! Aborting...")
   endif()
-
-  add_definitions(-fprofile-arcs -ftest-coverage)
-  link_libraries(gcov)
 
   if(NOT LCOV_PATH)
     message(FATAL_ERROR "lcov not found! Aborting...")
@@ -42,6 +38,11 @@ if(COVERAGE_ENABLED)
     message(FATAL_ERROR "genhtml not found! Aborting...")
   endif()
 
+  message(WARNING ${GENHTML_PATH})
+
+  add_definitions(-fprofile-arcs -ftest-coverage)
+  link_libraries(gcov)
+
   add_custom_target(coverage
     ${LCOV_PATH} --directory . --zerocounters
 
@@ -49,7 +50,7 @@ if(COVERAGE_ENABLED)
 
     command ${LCOV_PATH} --directory . --capture --output-file coverage.info
     command ${LCOV_PATH} --remove coverage.info 'tests/*' '/usr/*' --output-file coverage.info.cleaned
-    command ${GENHTML_PATH} -o coverage coverage.info.cleaned --legend -s 
+    command ${GENHTML_PATH} -o coverage coverage.info.cleaned --legend -s
     command ${CMAKE_COMMAND} -E remove coverage.info coverage.info.cleaned
 
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
