@@ -48,7 +48,6 @@ namespace Commander {
       return;
     }
 
-    std::cout << "# Execute command:" << std::endl;
     m_commands[m_arguments->Command()]->Handler()->Execute(m_arguments);
   }
 

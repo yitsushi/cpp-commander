@@ -1,9 +1,6 @@
 #define BOOST_TEST_MODULE ArgumentRegistry test
 #define BOOST_TEST_DYN_LINK
 #include <boost/test/unit_test.hpp>
-#include <string>
-#include <list>
-#include <sstream>
 #include <Commander/Argument.hpp>
 #include <Commander/ArgumentRegistry.hpp>
 
