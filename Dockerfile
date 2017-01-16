@@ -1,22 +1,13 @@
-FROM ubuntu:latest
+FROM alpine:latest
 
 MAINTAINER Balazs Nadasdi <balazs.nadasdi@cheppers.com>
 
-RUN apt-get update && \
-      apt-get install -y gcc g++ cmake \
-      lcov libboost-all-dev \
-      ruby gem && \
-      rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+      boost-dev git \
+      gcc g++ cmake make \
+      bash perl
 
-RUN apt-get update && \
-      apt-get install -y git-core && \
-      rm -rf /var/lib/apt/lists/*
-
-RUN gem install coveralls-lcov
-
-VOLUME /code
-
-WORKDIR /code
-
-ENTRYPOINT ["./build-and-run.sh"]
+RUN cd /tmp/ && \
+      git clone https://github.com/linux-test-project/lcov.git && \
+      cd lcov && make install
 
