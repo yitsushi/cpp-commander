@@ -1,20 +1,14 @@
 language: cpp
+sudo: required
+services:
+  - docker
 
-addons:
-  apt:
-    sources:
-      - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
-      - boost-latest
-      - ubuntu-toolchain-r-test
-    packages:
-      - libboost1.55-all-dev
-      - cmake
-      - cmake-data
-      - gcc-6
-      - g++-6
-      - clang
-      - libc++-dev
+before_install:
+  - docker pull yitsushi/cpp-commander
+
+install:
+  - gem install coveralls-lcov
 
 script:
-  - ./build-and-run.sh
+  - docker run --rm -e COVERALLS_TOKEN=${COVERALLS_TOKEN} -e TRAVIS_JOB_ID=${TRAVIS_JOB_ID} -v $(pwd):/code yitsushi/cpp-commander
 
