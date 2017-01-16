@@ -1,5 +1,9 @@
-#define BOOST_TEST_MODULE ArgumentRegistry test
 #define BOOST_TEST_DYN_LINK
+
+#ifdef STAND_ALONE
+#define BOOST_TEST_MODULE ArgumentRegistry test
+#endif
+
 #include <boost/test/unit_test.hpp>
 #include <string>
 #include <list>
@@ -38,6 +42,7 @@ BOOST_AUTO_TEST_CASE(MyTestCommandCall)
   const char* argv[] = { "./myprogram", "MyTestCommand", "--verbose", "--remote=localhost" };
   int argc = 4;
 
+  testcommand_called = false;
   Commander::CommandRegistry* registry = new Commander::CommandRegistry(argc, argv);
 
   registry->Register(&(NewMyTestCommand));
@@ -46,3 +51,30 @@ BOOST_AUTO_TEST_CASE(MyTestCommandCall)
   BOOST_CHECK_MESSAGE(testcommand_called, "MyTestCommand::Execute was not called");
 }
 
+BOOST_AUTO_TEST_CASE(ExecuteWithoutCommand)
+{
+  const char* argv[] = { "./myprogram", "--verbose", "--remote=localhost" };
+  int argc = 3;
+
+  testcommand_called = false;
+  Commander::CommandRegistry* registry = new Commander::CommandRegistry(argc, argv);
+
+  registry->Register(&(NewMyTestCommand));
+
+  registry->Execute();
+  BOOST_CHECK_MESSAGE(!testcommand_called, "MyTestCommand::Execute was called, sadly");
+}
+
+BOOST_AUTO_TEST_CASE(ExecuteWithInvalidCommand)
+{
+  const char* argv[] = { "./myprogram", "NoCommand", "--verbose", "--remote=localhost" };
+  int argc = 4;
+
+  testcommand_called = false;
+  Commander::CommandRegistry* registry = new Commander::CommandRegistry(argc, argv);
+
+  registry->Register(&(NewMyTestCommand));
+
+  registry->Execute();
+  BOOST_CHECK_MESSAGE(!testcommand_called, "MyTestCommand::Execute was called, sadly");
+}

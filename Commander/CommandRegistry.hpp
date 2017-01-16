@@ -33,7 +33,6 @@ namespace Commander {
     CommandRegistry(int argc, const char *argv[]);
     void Register(NewCommandFunc callable);
     void Execute();
-    void Dump();
 
   private:
     ArgumentRegistry* m_arguments;

@@ -44,8 +44,6 @@ namespace Commander {
     std::list<int> IntListValue(const char delimiter);
     std::list<long> LongListValue(const char delimiter);
 
-    void Print();
-
   private:
     std::string m_key;
     std::string m_value;

@@ -4,21 +4,11 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
-file(GLOB TEST_SRCS *.cpp)
-
-foreach(testSrc ${TEST_SRCS})
-  get_filename_component(testName ${testSrc} NAME_WE)
-  add_executable(${testName} ${testSrc})
-  target_link_libraries(${testName} ${Boost_LIBRARIES} commander)
-  set_target_properties(${testName} PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests)
-  add_test(NAME ${testName}
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests
-    COMMAND ${CMAKE_BINARY_DIR}/bin/tests/${testName})
-endforeach(testSrc)
-
-#aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} COMMANDER_TESTS_SOURCES)
-
-#add_executable(commander-tests ${COMMANDER_TESTS_SOURCES})
-#target_link_libraries(commander-tests commander ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-#add_test(commander-tests commander-tests)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} COMMANDER_TESTS_SOURCES)
+add_executable(${PROJECT_TEST_NAME} ${COMMANDER_TESTS_SOURCES})
+target_link_libraries(${PROJECT_TEST_NAME} commander ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+set_target_properties(${PROJECT_TEST_NAME} PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests)
+add_test(NAME ${PROJECT_TEST_NAME}
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests
+  COMMAND ${CMAKE_BINARY_DIR}/bin/tests/${PROJECT_TEST_NAME})

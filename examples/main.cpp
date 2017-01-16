@@ -9,8 +9,6 @@ int main(int argc, const char *argv[])
 
   registry->Register(&(Commands::NewMyCommand));
 
-  registry->Dump();
-
   registry->Execute();
 
   return 0;

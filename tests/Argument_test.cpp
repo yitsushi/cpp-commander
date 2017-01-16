@@ -1,5 +1,9 @@
-#define BOOST_TEST_MODULE Argument test
 #define BOOST_TEST_DYN_LINK
+
+#ifdef STAND_ALONE
+#define BOOST_TEST_MODULE Argument test
+#endif
+
 #include <boost/test/unit_test.hpp>
 #include <string>
 #include <list>
@@ -63,6 +67,27 @@ BOOST_AUTO_TEST_CASE(IntValueArgument)
   BOOST_CHECK_EQUAL(arg->IntValue(), excepted_value);
 }
 
+BOOST_AUTO_TEST_CASE(BoolValueArgument)
+{
+  Commander::Argument* arg;
+
+  std::string key = "want";
+
+  std::list< std::pair<std::string, bool> > test_values = {
+    {"y", true}, {"Y", true}, {"yes", true},
+    {"true", true}, {"enabled", true},
+    {"1", true}, {"2", true},
+
+    {"something", false}, {"", false},
+    {"no", false}, {"0", false}, {"-1", false}
+  };
+
+  for (auto k : test_values) {
+    arg = new Commander::Argument(key, k.first);
+    BOOST_CHECK_EQUAL(arg->BoolValue(), k.second);
+  }
+}
+
 BOOST_AUTO_TEST_CASE(LongValueArgument)
 {
   Commander::Argument* arg;
@@ -104,6 +129,68 @@ BOOST_AUTO_TEST_CASE(ListValueArgument)
   BOOST_CHECK_EQUAL(arg->Key(), key);
   BOOST_CHECK_EQUAL(arg->Value(), value);
   std::list<std::string> values = arg->ListValue(delimiter);
+  BOOST_CHECK_EQUAL_COLLECTIONS(
+      values.begin(), values.end(),
+      excepted_value.begin(), excepted_value.end()
+  );
+}
+
+BOOST_AUTO_TEST_CASE(IntListValueArgument)
+{
+  Commander::Argument* arg;
+  std::list<int> excepted_value = {1, 2, 9, -3};
+  char delimiter = ',';
+
+  std::string key = "id";
+  std::string value;
+
+  std::stringstream ss;
+  for (int s : excepted_value) {
+    ss << s << delimiter;
+  }
+  value = ss.str();
+  value = value.substr(0, value.length()-1);
+
+  arg = new Commander::Argument(key, value);
+
+  BOOST_CHECK_EQUAL(arg->OnlyKey(), false);
+  BOOST_CHECK_EQUAL(arg->OnlyValue(), false);
+  BOOST_CHECK_EQUAL(arg->Key(), key);
+  BOOST_CHECK_EQUAL(arg->Value(), value);
+  std::list<int> values = arg->IntListValue(delimiter);
+  BOOST_CHECK_EQUAL_COLLECTIONS(
+      values.begin(), values.end(),
+      excepted_value.begin(), excepted_value.end()
+  );
+}
+
+BOOST_AUTO_TEST_CASE(LongListValueArgument)
+{
+  Commander::Argument* arg;
+  std::list<long> excepted_value = {
+    123443242321,
+    123443242326,
+    -123443242329
+  };
+  char delimiter = ',';
+
+  std::string key = "id";
+  std::string value;
+
+  std::stringstream ss;
+  for (long s : excepted_value) {
+    ss << s << delimiter;
+  }
+  value = ss.str();
+  value = value.substr(0, value.length()-1);
+
+  arg = new Commander::Argument(key, value);
+
+  BOOST_CHECK_EQUAL(arg->OnlyKey(), false);
+  BOOST_CHECK_EQUAL(arg->OnlyValue(), false);
+  BOOST_CHECK_EQUAL(arg->Key(), key);
+  BOOST_CHECK_EQUAL(arg->Value(), value);
+  std::list<long> values = arg->LongListValue(delimiter);
   BOOST_CHECK_EQUAL_COLLECTIONS(
       values.begin(), values.end(),
       excepted_value.begin(), excepted_value.end()

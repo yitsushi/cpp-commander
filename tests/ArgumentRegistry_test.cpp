@@ -1,5 +1,9 @@
-#define BOOST_TEST_MODULE ArgumentRegistry test
 #define BOOST_TEST_DYN_LINK
+
+#ifdef STAND_ALONE
+#define BOOST_TEST_MODULE ArgumentRegistry test
+#endif
+
 #include <boost/test/unit_test.hpp>
 #include <Commander/Argument.hpp>
 #include <Commander/ArgumentRegistry.hpp>
@@ -125,4 +129,20 @@ BOOST_AUTO_TEST_CASE(HasSubCommand)
   BOOST_CHECK(arg);
   BOOST_CHECK(!arg->OnlyKey());
   BOOST_CHECK_EQUAL(arg->Value(), "localhost");
+}
+
+BOOST_AUTO_TEST_CASE(CallWithValueOnlyArgument)
+{
+  const char* argv[] = { "./myprogram", "MyCommand", "CopyRemote", "myfile" };
+  int argc = 4;
+
+  Commander::ArgumentRegistry* registry = new Commander::ArgumentRegistry(argc, argv);
+  Commander::Argument* arg;
+
+  BOOST_CHECK(registry->HasCommand());
+  BOOST_CHECK_EQUAL(registry->Command(), "MyCommand");
+  BOOST_CHECK(registry->HasSubCommand());
+  BOOST_CHECK_EQUAL(registry->SubCommand(), "CopyRemote");
+
+  // TODO: How can we access a value-only argument? :O
 }

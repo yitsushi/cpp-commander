@@ -62,7 +62,7 @@ namespace Commander {
   {
     std::string v = m_value;
     std::transform(v.begin(), v.end(), v.begin(), ::tolower);
-    if (v == "true" || v == "yes" || v == "y") return true;
+    if (v == "true" || v == "yes" || v == "y" || v == "enabled") return true;
 
     if (std::atoi(v.c_str()) > 0) return true;
 
@@ -105,16 +105,5 @@ namespace Commander {
     }
 
     return value_list;
-  }
-
-  void Argument::Print()
-  {
-    if (OnlyKey()) {
-      std::cout << "  [K ] " << Key() << std::endl;
-    } else if (OnlyValue()) {
-      std::cout << "  [ V] " << Value() << std::endl;
-    } else {
-      std::cout << "  [KV] " << Key() << " -> " << Value() << std::endl;
-    }
   }
 }

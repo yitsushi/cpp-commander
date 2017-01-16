@@ -30,8 +30,6 @@ namespace Commander {
   public:
     ArgumentRegistry(int argc, const char *argv[]);
 
-    void Dump();
-
     Argument* FindByKey(std::string);
 
     bool HasCommand();

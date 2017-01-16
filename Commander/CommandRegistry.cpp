@@ -50,17 +50,4 @@ namespace Commander {
 
     m_commands[m_arguments->Command()]->Handler()->Execute(m_arguments);
   }
-
-  void CommandRegistry::Dump()
-  {
-    std::cout << "# Available commands:" << std::endl;
-
-    for (auto& c : m_commands) {
-      std::cout << "  - " << c.first << std::endl;
-    }
-
-    std::cout << "# Call details: (K = Key, V = Value)" << std::endl;
-
-    m_arguments->Dump();
-  }
 }

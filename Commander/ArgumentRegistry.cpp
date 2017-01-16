@@ -72,18 +72,4 @@ namespace Commander {
 
   bool ArgumentRegistry::HasSubCommand() { return !m_subcommand.empty(); }
   std::string ArgumentRegistry::SubCommand() { return m_subcommand; }
-
-  void ArgumentRegistry::Dump()
-  {
-    if (HasCommand()) {
-      std::cout << "Command: " << Command() << std::endl;
-    }
-    if (HasSubCommand()) {
-      std::cout << "Subcommand: " << SubCommand() << std::endl;
-    }
-
-    for (Argument* arg : m_arguments) {
-      arg->Print();
-    }
-  }
 }
