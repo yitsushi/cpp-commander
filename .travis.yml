@@ -10,5 +10,7 @@ install:
   - gem install coveralls-lcov
 
 script:
-  - docker run --rm -e COVERALLS_TOKEN=${COVERALLS_TOKEN} -e TRAVIS_JOB_ID=${TRAVIS_JOB_ID} -v $(pwd):/code yitsushi/cpp-commander
+  - docker run --rm -v `pwd`:`pwd` -w `pwd` yitsushi/cpp-commander ./build-and-run.sh
 
+after_success:
+  - coveralls-lcov --repo-token ${COVERALLS_TOKEN} coverage.info.cleaned
