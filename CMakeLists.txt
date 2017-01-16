@@ -38,20 +38,18 @@ if(COVERAGE_ENABLED)
     message(FATAL_ERROR "genhtml not found! Aborting...")
   endif()
 
-  message(WARNING ${GENHTML_PATH})
-
   add_definitions(-fprofile-arcs -ftest-coverage)
   link_libraries(gcov)
 
   add_custom_target(coverage
     ${LCOV_PATH} --directory . --zerocounters
 
-    command ${PROJECT_TEST_NAME}
+    COMMAND ${PROJECT_TEST_NAME}
 
-    command ${LCOV_PATH} --directory . --capture --output-file coverage.info
-    command ${LCOV_PATH} --remove coverage.info 'tests/*' '/usr/*' --output-file coverage.info.cleaned
-    command ${GENHTML_PATH} -o coverage coverage.info.cleaned --legend -s
-    command ${CMAKE_COMMAND} -E remove coverage.info coverage.info.cleaned
+    COMMAND ${LCOV_PATH} --directory . --capture --output-file coverage.info
+    COMMAND ${LCOV_PATH} --remove coverage.info 'tests/*' '/usr/*' --output-file coverage.info.cleaned
+    COMMAND ${GENHTML_PATH} -o coverage coverage.info.cleaned --legend -s
+    COMMAND ${CMAKE_COMMAND} -E remove coverage.info
 
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Resetting code coverage counters to zero.\nProcessing code coverage counters and generating report."
